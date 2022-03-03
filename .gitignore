@@ -7,3 +7,4 @@ gaming/
 image_handle/
 matrices/
 password/
+*.o
