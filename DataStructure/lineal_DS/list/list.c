@@ -2,10 +2,20 @@
 #include <stdlib.h>
 #include "list.h"
 
+/***
+ * @brief valida si la lista esta o no vacía
+ * @param lst puntero de tipo nodo que representa a la DE lista
+ * @returns Devuelve un valor entero, 1 o 0
+ ***/
 int isEmpty_linkedList(lista lst) {
     return lst == NULL? TRUE:FALSE;
 }
 
+/***
+ * @brief calcula el total de elementos que contiene la lista
+ * @param lst puntero de tipo nodo que representa a la DE lista
+ * @returns Devuelve un valor entero
+ ***/
 int size_list(lista lst) {
     int tam = 0;
     while(!isEmpty_linkedList(lst)) {
@@ -15,6 +25,11 @@ int size_list(lista lst) {
     return tam;
 }
 
+/***
+ * @brief reserva en memoria dinamica una estructura de tipo nodo
+ * @param e tipo de dato que se guarda en la lista
+ * @returns Devuelve una estructura de tipo de nodo guardado en memoria dinámica
+ ***/
 nodo* crear_nodo(type_data e) {
     nodo* new_nodo = (nodo*) malloc(sizeof(nodo));
     if(new_nodo == NULL) {
@@ -26,6 +41,11 @@ nodo* crear_nodo(type_data e) {
     return new_nodo;
 }
 
+/***
+ * @brief Inserta un elemento nuevo al final de la lista
+ * @param lst puntero doble de tipo nodo que representa a la DE lista
+ * @param value representa el valor que se almacenara en la lista
+ ***/
 void linkedList_insert_node(lista* lst, type_data value) {
     nodo* new_nodo = crear_nodo(value);
     if(isEmpty_linkedList(*lst)) {
@@ -39,6 +59,11 @@ void linkedList_insert_node(lista* lst, type_data value) {
     }
 }
 
+/***
+ * @brief Inserta un elemento nuevo al inicio de la lista
+ * @param lst puntero doble de tipo nodo que representa a la DE lista
+ * @param value representa el valor que se almacenara en la lista
+ ***/
 void linkedList_insert_at_begin(lista* lst,type_data value) {
     nodo* new_nodo = crear_nodo(value);
     if(isEmpty_linkedList(*lst)) {
@@ -50,6 +75,12 @@ void linkedList_insert_at_begin(lista* lst,type_data value) {
     *lst = new_nodo;
 }
 
+/***
+ * @brief Inserta un elemento nuevo en la lista en la posicion en el que se desea insertar
+ * @param lst puntero doble de tipo nodo que representa a la DE lista
+ * @param pos representa el indice de la posición de la lista, es un valor entero cuyo rango esta entre 0 hasta el total de elementos - 1
+ * @param value representa el valor que se almacenara en la lista
+ ***/
 void linkedList_insert_node_at(lista* lst,int pos, type_data value) {
     if(isEmpty_linkedList(*lst)) {
         fprintf(stderr,"List is empty\n");
@@ -78,6 +109,11 @@ void linkedList_insert_node_at(lista* lst,int pos, type_data value) {
     }
 }
 
+/***
+ * @brief Elimina el primer elemento de la lista
+ * @param lst puntero doble de tipo nodo que representa a la DE lista
+ * @returns valor del dato en el nodo a eliminar
+ ***/
 type_data linkedList_remove_node(lista* lst) {
     type_data value = -1;
     if(isEmpty_linkedList(*lst)) {
@@ -91,6 +127,11 @@ type_data linkedList_remove_node(lista* lst) {
     return value;
 }
 
+/***
+ * @brief Elimina el último elemento de la lista
+ * @param lst puntero doble de tipo nodo que representa a la DE lista
+ * @returns valor del dato en el nodo a eliminar
+ ***/
 type_data linkedList_remove_last_node(lista* lst) {
     type_data value = -1;
     if(isEmpty_linkedList(*lst)) {
@@ -111,6 +152,12 @@ type_data linkedList_remove_last_node(lista* lst) {
     return value;
 }
 
+/***
+ * @brief Elimina un elemento ubicada en una posición valida de la lista
+ * @param lst puntero doble de tipo nodo que representa a la DE lista
+ * @param pos representa el indice de la posición de la lista, es un valor entero cuyo rango esta entre 0 hasta el total de elementos - 1
+ * @returns valor del dato en el nodo a eliminar
+ ***/
 type_data linkedList_remove_node_at(lista* lst,int pos) {
     type_data value = -1;
     if(isEmpty_linkedList(*lst)) {
@@ -143,6 +190,12 @@ type_data linkedList_remove_node_at(lista* lst,int pos) {
     return value;
 }
 
+/***
+ * @brief Obtiene el nodo que se ubica en la posición de la lista
+ * @param lst puntero de tipo nodo que representa a la DE lista
+ * @param pos representa el indice de la posición de la lista, es un valor entero cuyo rango esta entre 0 hasta el total de elementos - 1
+ * @returns regresa el valor del dato
+ ***/
 type_data linkedList_get_element_at(lista lst, int pos) {
     type_data value = -1;
     if(isEmpty_linkedList(lst)) {
@@ -161,6 +214,12 @@ type_data linkedList_get_element_at(lista lst, int pos) {
     return value;
 }
 
+/***
+ * @brief valida si el dato existe dentro de la lista
+ * @param lst puntero de tipo nodo que representa a la DE lista
+ * @param value representa el dato a buscar dentro de la lista
+ * @returns retorna 1 o 0 dependiendo del resultado del proceso
+ ***/
 int is_element_at_linkedList(lista lst, type_data value) {
     if(isEmpty_linkedList(lst)) {
         fprintf(stderr,"Error. List is empty\n");
@@ -177,10 +236,18 @@ int is_element_at_linkedList(lista lst, type_data value) {
     return flag;
 }
 
+/***
+ * @brief imprime en consola el valor del dato
+ * @param x representa el dato a imprimir su valor
+ ***/
 void print_dato(type_data x) {
     printf("%d ", x);
 }
 
+/***
+ * @brief imprime en consola los datos de la lista
+ * @param lst puntero de tipo nodo que representa a la DE lista
+ ***/
 void print_linkedList(lista lst) {
     printf("[ ");
     while(lst != NULL) {
@@ -190,6 +257,10 @@ void print_linkedList(lista lst) {
     printf("]\n");
 }
 
+/***
+ * @brief limpia todo el contenido de la lista
+ * @param lst puntero doble de tipo nodo que representa a la DE lista
+ ***/
 void clear_list(lista* lst) {
 	if(isEmpty_linkedList(*lst))
         return;
