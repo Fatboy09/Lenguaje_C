@@ -1,5 +1,5 @@
-#ifndef LISTDE_H_INCLUDED
-#define LISTDE_H_INCLUDED
+#ifndef DLL_H_INCLUDED
+#define DLL_H_INCLUDED
 
 #define TRUE 1
 #define FALSE 0
@@ -10,22 +10,23 @@ typedef struct nodo {
     type_data elem;
     struct nodo* sig;
     struct nodo* ant;
-}nodo;
+} nodo;
 
 typedef nodo* lista;
 
-int isEmpty(lista list);
-int size_list(lista list);
-void insert_nodo(lista* list,type_data e);
-void insert_nodo_at(lista* list,int,type_data e);
-void insert_at_begin(lista* list,type_data e);
-type_data remove_at(lista* list, int idx);
-type_data remove_nodo(lista* list);
-type_data remove_last_nodo(lista* list);
-void clear_list(lista* list);
-int find_elem(lista list,type_data e);
-type_data get_element_at(lista list,int idx);
-void print_list(lista list);
-void print_listReference(lista list);
+int isEmpty_doubleLinkedList(lista list);
+int size_doubleLinkedList(lista list);
+void doubleLinkedList_insert_node(lista* list,type_data e);
+void doubleLinkedList_insert_node_at(lista* list,int index,type_data e);
+void doubleLinkedList_insert_at_begin(lista* list,type_data e);
+type_data doubleLinkedList_remove_node_at(lista* list, int index);
+type_data doubleLinkedList_remove_node(lista* list);
+type_data doubleLinkedList_remove_last_node(lista* list);
+void doubleLinkedList_clear_list(lista* list);
+int doubleLinkedList_is_elem_at_list(lista list,type_data e);
+int doubleLinkedList_get_index(lista list,type_data e);
+type_data doubleLinkedList_get_element_at(lista list,int index);
+void print_doubleLinkedList(lista list);
+void print_doubleLinkedListReference(lista list);
 
-#endif // LIST_H_INCLUDED
+#endif // DOUBLELINKEDLIST_H_INCLUDED
