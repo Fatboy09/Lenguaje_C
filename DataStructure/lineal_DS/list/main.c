@@ -62,5 +62,12 @@ int main()
     printf("bool: %d\n",is_element_at_linkedList(lst,9));
     printf("bool: %d\n",is_element_at_linkedList(lst,40));
     
+    if(!isEmpty_linkedList(lst)) {
+		printf("--- borrando elementos de la lista\n");
+		clear_list(&lst);
+	}
+	
+	print_linkedList(lst);
+    
     return 0;
 }

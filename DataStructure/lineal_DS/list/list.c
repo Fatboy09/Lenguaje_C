@@ -189,3 +189,16 @@ void print_linkedList(lista lst) {
     }
     printf("]\n");
 }
+
+void clear_list(lista* lst) {
+	if(isEmpty_linkedList(*lst))
+        return;
+    int size = size_list(*lst);
+    if(size == 1) {
+        free(*lst);
+        *lst = NULL;
+        return;
+    }
+    linkedList_remove_node(lst);
+    clear_list(lst);
+}
