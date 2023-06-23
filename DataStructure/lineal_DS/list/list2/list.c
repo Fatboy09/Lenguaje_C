@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include "list.h"
 
-int isEmpty(lista lst) {
+int isEmpty_linkedList(lista lst) {
     return lst == NULL? TRUE:FALSE;
 }
 
 int size_list(lista lst) {
     int tam = 0;
-    while(!isEmpty(lst)) {
+    while(!isEmpty_linkedList(lst)) {
         tam++;
         lst = lst->sig;
     }
@@ -26,9 +26,9 @@ nodo* crear_nodo(type_data e) {
     return new_nodo;
 }
 
-void insert_nodo(lista* lst, type_data value) {
+void linkedList_insert_node(lista* lst, type_data value) {
     nodo* new_nodo = crear_nodo(value);
-    if(isEmpty(*lst)) {
+    if(isEmpty_linkedList(*lst)) {
         *lst = new_nodo;
     } else {
         lista aux = *lst;
@@ -39,9 +39,9 @@ void insert_nodo(lista* lst, type_data value) {
     }
 }
 
-void insert_at_begin(lista* lst,type_data value) {
+void linkedList_insert_at_begin(lista* lst,type_data value) {
     nodo* new_nodo = crear_nodo(value);
-    if(isEmpty(*lst)) {
+    if(isEmpty_linkedList(*lst)) {
         *lst = new_nodo;
         return;
     }
@@ -50,8 +50,8 @@ void insert_at_begin(lista* lst,type_data value) {
     *lst = new_nodo;
 }
 
-void insert_nodo_at(lista* lst,int pos, type_data value) {
-    if(isEmpty(*lst)) {
+void linkedList_insert_node_at(lista* lst,int pos, type_data value) {
+    if(isEmpty_linkedList(*lst)) {
         fprintf(stderr,"List is empty\n");
         return;
     }
@@ -62,12 +62,10 @@ void insert_nodo_at(lista* lst,int pos, type_data value) {
     }
     int index = 0;
     if(pos == 0){
-        /*new_nodo->sig = aux;
-        *lst = new_nodo;*/
-        insert_at_begin(lst,value);
+        linkedList_insert_at_begin(lst,value);
     }
     else if(pos == (tam-1)) {
-        insert_nodo(lst,value);
+        linkedList_insert_node(lst,value);
     } else {
         nodo* new_nodo = crear_nodo(value);
         lista aux = *lst;
@@ -80,23 +78,28 @@ void insert_nodo_at(lista* lst,int pos, type_data value) {
     }
 }
 
-type_data remove_nodo(lista* lst) {
-    type_data value = ERROR;
-    if(isEmpty(*lst)) {
+nodo linkedList_remove_node(lista* lst) {
+	nodo node;
+    if(isEmpty_linkedList(*lst)) {
         fprintf(stderr,"Error. List is empty\n");
+        exit(EXIT_FAILURE);
     } else {
         lista aux = *lst;
-        value = aux->elem;
         *lst = aux->sig;
+        node.elem = aux->elem;
+        node.sig = aux->sig;
         free(aux);
     }
-    return value;
+    return node;
 }
 
-type_data remove_last_nodo(lista* lst) {
-    type_data value = ERROR;
-    if(isEmpty(*lst)) {
+nodo linkedList_remove_last_node(lista* lst) {
+	
+	nodo node;
+	
+    if(isEmpty_linkedList(*lst)) {
         fprintf(stderr,"Error. List is empty\n");
+        exit(EXIT_FAILURE);
     } else {
         lista aux = *lst;
         lista aux2 = NULL;
@@ -107,27 +110,32 @@ type_data remove_last_nodo(lista* lst) {
         }
         aux2 = aux->sig;
         aux->sig = NULL;
-        value = aux2->elem;
+        node.elem = aux2->elem;
+        node.sig = aux2->sig;
         free(aux2);
     }
-    return value;
+    return node;
 }
 
-type_data remove_at(lista* lst,int pos) {
-    type_data value = ERROR;
-    if(isEmpty(*lst)) {
+nodo linkedList_remove_node_at(lista* lst,int pos) {
+    
+    nodo node;
+    
+    if(isEmpty_linkedList(*lst)) {
         fprintf(stderr,"Error. List is empty\n");
+        exit(EXIT_FAILURE);
     } else {
         int lpos = size_list(*lst)-1;
         if((pos < 0) || (pos > lpos)) {
             fprintf(stderr,"Error. Index out of range\n");
+            exit(EXIT_FAILURE);
         }
         else {
             if(pos == 0) {
-                value = remove_nodo(lst);
+                node = linkedList_remove_node(lst);
             }
             else if(pos == lpos) {
-                value = remove_last_nodo(lst);
+                node = linkedList_remove_last_node(lst);
             } else {
                 lista aux = *lst;
                 lista aux2 = NULL;
@@ -137,17 +145,18 @@ type_data remove_at(lista* lst,int pos) {
                 }
                 aux2 = aux->sig;
                 aux->sig = aux2->sig;
-                value = aux2->elem;
+                node.elem = aux2->elem;
+                node.sig = aux2->sig;
                 free(aux2);
             }
         }
     }
-    return value;
+    return node;
 }
 
-type_data get_element_at(lista lst, int pos) {
+type_data linkedList_get_element_at(lista lst, int pos) {
     type_data value = ERROR;
-    if(isEmpty(lst)) {
+    if(isEmpty_linkedList(lst)) {
         fprintf(stderr,"Error. List is empty\n");
     } else {
         int lpos = size_list(lst)-1;
@@ -163,8 +172,8 @@ type_data get_element_at(lista lst, int pos) {
     return value;
 }
 
-int find_elem(lista lst, type_data value) {
-    if(isEmpty(lst)) {
+int is_element_at_linkedList(lista lst, type_data value) {
+    if(isEmpty_linkedList(lst)) {
         fprintf(stderr,"Error. List is empty\n");
         return -1;
     }
@@ -183,7 +192,7 @@ void print_dato(type_data x) {
     printf("%d ", x);
 }
 
-void print_list(lista lst) {
+void print_linkedList(lista lst) {
     printf("[ ");
     while(lst != NULL) {
         print_dato(lst->elem);
@@ -192,16 +201,17 @@ void print_list(lista lst) {
     printf("]\n");
 }
 
-void clear_list(lista* list) {
-    if(isEmpty(*list))
+void clear_list(lista* lst) {
+    if(isEmpty_linkedList(*lst))
         return;
-    int size;
-    remove_nodo(list);
-    size = size_list(*list);
+        
+    int size = size_list(*lst);
+    
     if(size == 1) {
-        free(*list);
-        *list = NULL;
+        free(*lst);
+        *lst = NULL;
         return;
     }
-    clear_list(list);
+    linkedList_remove_node(lst);
+    clear_list(lst);
 }
